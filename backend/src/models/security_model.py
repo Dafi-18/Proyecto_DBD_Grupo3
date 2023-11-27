@@ -45,27 +45,24 @@ class SeguridadModel():
             raise Exception(ex)
 
     @classmethod
-    def add_person(self, persona, usuario):
+    def add_person(cls, persona, usuario):
         try:
-            connection = get_connection()
-
-            with connection.cursor() as cursor:
-                cursor.execute("BEGIN;")
-                cursor.execute("INSERT INTO persona (Dni, Primer_nombre, Segundo_nombre, Primer_apellido,Segundo_apellido,Celular) VALUES (%s, %s, %s, %s, %s, %s) RETURNING dni;", (
-                    persona.dni, persona.primer_nombre, persona. segundo_nombre, persona.primer_apellido, persona.segundo_apellido, persona.celular))
-
-                if cursor.rowcount > 0:
-                    dni_persona = cursor.fetchone()[0]
-                    cursor.execute("INSERT INTO usuario (Dni, Cod_uni, Correo_uni, Contrasena) VALUES (%s, %s, %s, %s);", (
-                        dni_persona, usuario.codigouni, usuario.correouni, usuario.contrasena))
+            with get_connection() as connection:
+                with connection.cursor() as cursor:
+                    cursor.execute("BEGIN;")
+                    cursor.execute("INSERT INTO persona (Dni, Primer_nombre, Segundo_nombre, Primer_apellido,Segundo_apellido,Celular) VALUES (%s, %s, %s, %s, %s, %s) RETURNING dni;", (
+                        persona.dni, persona.primer_nombre, persona.segundo_nombre, persona.primer_apellido, persona.segundo_apellido, persona.celular))
+                    print(f"Rows inserted: {cursor.rowcount}")  # Add this line
+                    if cursor.rowcount > 0:
+                        dni_persona = cursor.fetchone()[0]
+                        cursor.execute("INSERT INTO usuario (Dni, Cod_uni, Correo_uni, Contrasena) VALUES (%s, %s, %s, %s);", (
+                            dni_persona, usuario.codigouni, usuario.correouni, usuario.contrasena))
                     cursor.execute("COMMIT;")
-
-            affected_rows = cursor.rowcount
-            connection.commit()
-            connection.close()
+                    affected_rows = cursor.rowcount
             return affected_rows
 
         except Exception as ex:
+            print(f"Error: {ex}")  # Add this line
             raise Exception(ex)
 
     @classmethod
