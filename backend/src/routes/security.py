@@ -67,17 +67,17 @@ def add_persona():
 @main.route('/login', methods=['GET', 'POST'])
 def login():
     try:
-        if not request.json or 'correo_uni' not in request.json or 'contrasena' not in request.json:
-            return jsonify({'message': 'Missing fields'}), 400
-
         correo_uni = request.json['correo_uni']
         contrasena = request.json['contrasena']
         user = usuario(None, None, None, correo_uni, contrasena)
         session = SeguridadModel.login(user)
 
         if session:
-            return jsonify({'message': 'Login successful', 'user': correo_uni}), 200
+            return jsonify(correo_uni)
         else:
-            return jsonify({'message': 'Invalid credentials'}), 401
+            return jsonify({'Message': 'No inicio session'})
+
+        return jsonify({})
+
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
