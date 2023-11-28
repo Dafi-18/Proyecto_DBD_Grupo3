@@ -12,3 +12,14 @@ class Inventario_Ventas():
             'precio_unitario': self.precio_unitario,
             'cantidad': self.cantidad
         }
+
+class Articulos_vendidos():
+    def __init__(self, nombre_articulo, cantidad):
+        self.nombre_articulo = nombre_articulo
+        self.cantidad = cantidad
+
+    def to_JSON(self):
+        return {
+            'nombre_articulo': self.nombre_articulo,
+            'cantidad': self.cantidad
+        }
