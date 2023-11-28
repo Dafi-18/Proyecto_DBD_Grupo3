@@ -75,27 +75,27 @@ class EstadisticasModel:
 
     @classmethod
     def get_total_recaudado_alquier_mes(cls, fecha):
-        query = """"
+        query = """
         SELECT SUM(monto) AS Cantidad_Total_Monto_Recaudado_Alquiler
         FROM alquiler
         WHERE EXTRACT(MONTH FROM Fecha_alquiler) = EXTRACT(MONTH FROM CAST(%s AS DATE));
         """
         with get_connection() as conn:
             with conn.cursor() as cur:
-                cur.execute(query, (fecha))
+                cur.execute(query, (fecha, ))
                 result = cur.fetchone()
         return result[0] if result else None
 
     @classmethod
     def get_total_recaudado_ventas_mes(cls, fecha):
-        query = """"
+        query = """
         SELECT SUM(monto_final) AS Cantidad_Total_Monto_Recaudado_Venta
         FROM venta
         WHERE EXTRACT(MONTH FROM fecha_venta) = EXTRACT(MONTH FROM CAST(%s AS DATE));
         """
         with get_connection() as conn:
             with conn.cursor() as cur:
-                cur.execute(query, (fecha))
+                cur.execute(query, (fecha,))
                 result = cur.fetchone()
         return result[0] if result else None
 

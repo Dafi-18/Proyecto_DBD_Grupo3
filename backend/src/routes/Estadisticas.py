@@ -51,7 +51,7 @@ def total_prestamos_mes():
 def total_recaudado_alquiler_mes():
     try:
         fecha = request.args.get('fecha')
-        total = EstadisticasModel.get_total_recaudado_alquiler_mes(fecha)
+        total = EstadisticasModel.get_total_recaudado_alquier_mes(fecha)
         return jsonify({'total_recaudado_alquiler_mes': total}), 200
     except Exception as ex:
         return jsonify({'error': str(ex)}), 500
