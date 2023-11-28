@@ -81,3 +81,37 @@ def login():
 
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
+    @main.route('/update/<id>',methods=['PUT'])  
+    def update_contrasena(id):
+        try:
+            id_usuario=request.json['id']
+            Contrasena= request.json['contrasena']
+            
+            
+            user = usuario(id_usuario,None,None, None, Contrasena=Contrasena)
+
+            affected_rows=SeguridadModel.update_contrasena(user)   
+            print(affected_rows)
+
+            if affected_rows == 1 :
+                return jsonify({'message':"contraseña cambiada"})
+            else:
+                return jsonify({'message': "Error en update"}),404
+            
+
+            return jsonify({})
+
+        except Exception as ex:
+            return jsonify({'message' : str(ex)}),500
+
+    @main.route('/reporte')
+    def get_servicios_user():
+        try:
+            id_user =request.json['id']
+            user = usuario(id_user, None, None, None, None)
+            reportes = SeguridadModel.get_servicios_user(user)
+            
+            return jsonify(reportes)
+
+        except Exception as ex:
+            return jsonify({'message': str(ex)}), 500

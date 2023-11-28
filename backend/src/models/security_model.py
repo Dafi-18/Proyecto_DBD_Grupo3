@@ -1,5 +1,5 @@
 from database.dastabase import get_connection
-from .entities.seguridad import usuario, persona
+from .entities.seguridad import usuario, persona, venta
 import json
 
 
@@ -118,3 +118,43 @@ class SeguridadModel():
         finally:
             if connection:
                 connection.close()  # Ensure the database connection is closed
+    @classmethod
+    def update_contrasena(self,usuario):
+            try:
+                connection=get_connection()
+                
+                with connection.cursor() as cursor:
+                    
+                    cursor.execute("UPDATE usuario SET contrasena= %s WHERE id_usuario= %s;", (usuario.contrasena, usuario.id))
+                    
+                    affected_rows=cursor.rowcount
+                    connection.commit()
+
+
+                connection.close()
+                return affected_rows
+            
+            except Exception as ex:
+                raise Exception(ex)
+        
+    @classmethod
+    def get_servicios_user(self,usuario):
+        try:
+            connection=get_connection()
+            servicios=[]
+
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM REPORTE_FULL_U WHERE Id_usuario  = %s ;",(usuario.id))
+                rows=cursor.fetchall()
+
+                
+                for row in rows :
+                    servicio = venta(row[0], row[1], str(row[2]), row[3], row[4],row[5])
+                    servicios.append(servicio.to_JSON())
+            
+            connection.close()
+            print(servicios)
+            return servicios
+        
+        except Exception as ex:
+            raise Exception(ex)

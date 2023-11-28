@@ -45,3 +45,72 @@ class usuario():
     @classmethod
     def check_password(self, hashed_password, password):
         return check_password_hash(hashed_password, password)
+
+class venta:
+    def __init__(self, nombre_producto, tipo_servicio, fecha_operacion, monto, estado_operacion, id_usuario):
+        self.nombre_producto = nombre_producto
+        self.tipo_servicio = tipo_servicio
+        self.fecha_operacion = fecha_operacion
+        self.monto = monto
+        self.estado_operacion = estado_operacion
+        self.id_usuario = id_usuario
+
+    def to_JSON(self):
+        # Implementa la lógica para convertir la instancia a un diccionario JSON
+        # Puedes personalizar esto según tus necesidades
+        return {
+            "nombre_producto": self.nombre_producto,
+            "tipo_servicio": self.tipo_servicio,
+            "fecha_operacion": str(self.fecha_operacion),
+            "monto": self.monto,
+            "estado_operacion": self.estado_operacion,
+            "id_usuario": self.id_usuario
+        }
+    
+class prestamo:
+    def __init__(self, nombre_producto, tipo_servicio, fecha_operacion, hora_inicio, hora_fin, fecha_devolucion, estado_operacion, id_usuario):
+        self.nombre_producto = nombre_producto
+        self.tipo_servicio = tipo_servicio
+        self.fecha_operacion = fecha_operacion
+        self.hora_inicio = hora_inicio
+        self.hora_fin = hora_fin
+        self.fecha_devolucion = fecha_devolucion
+        self.estado_operacion = estado_operacion
+        self.id_usuario = id_usuario
+
+    def to_JSON(self):
+        return {
+            "nombre_producto": self.nombre_producto,
+            "tipo_servicio": self.tipo_servicio,
+            "fecha_operacion": str(self.fecha_operacion),
+            "hora_inicio": str(self.hora_inicio),
+            "hora_fin": str(self.hora_fin),
+            "fecha_devolucion": str(self.fecha_devolucion),
+            "estado_operacion": self.estado_operacion,
+            "id_usuario": self.id_usuario
+        }
+
+class alquiler:
+    def __init__(self, nombre_producto, tipo_servicio, fecha_operacion, hora_inicio, hora_fin, fecha_devolucion, monto, estado_operacion, id_usuario):
+        self.nombre_producto = nombre_producto
+        self.tipo_servicio = tipo_servicio
+        self.fecha_operacion = fecha_operacion
+        self.hora_inicio = hora_inicio
+        self.hora_fin = hora_fin
+        self.fecha_devolucion = fecha_devolucion
+        self.monto = monto
+        self.estado_operacion = estado_operacion
+        self.id_usuario = id_usuario
+
+    def to_JSON(self):
+        return {
+            "nombre_producto": self.nombre_producto,
+            "tipo_servicio": self.tipo_servicio,
+            "fecha_operacion": str(self.fecha_operacion),
+            "hora_inicio": str(self.hora_inicio),
+            "hora_fin": str(self.hora_fin),
+            "fecha_devolucion": str(self.fecha_devolucion),
+            "monto": self.monto,
+            "estado_operacion": self.estado_operacion,
+            "id_usuario": self.id_usuario
+        }
