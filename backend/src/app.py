@@ -8,7 +8,8 @@ from routes import Product
 from routes import Estadisticas, Finanzas
 from routes import security
 from routes import Encuesta
-
+from routes import InventarioPrestamos, InventarioVentas
+from routes import Reservas
 
 app = Flask(__name__)
 CORS(app)
@@ -34,13 +35,15 @@ if __name__ == '__main__':
 
     # BluePrints Finanzas
     app.register_blueprint(Finanzas.main, url_prefix='/api/finanzas')
-    
+
     # BluePrints Inventario ventas
-    app.register_blueprint(InventarioVentas.main, url_prefix='/api/inventario/ventas')
-    
+    app.register_blueprint(InventarioVentas.main,
+                           url_prefix='/api/inventario/ventas')
+
     # BluePrints Inventario préstamos
-    app.register_blueprint(InventarioPrestamos.main, url_prefix='/api/inventario/prestamos')
-    
+    app.register_blueprint(InventarioPrestamos.main,
+                           url_prefix='/api/inventario/prestamos')
+
     # BluePrints Reservas
     app.register_blueprint(Reservas.main, url_prefix='/api/reservas')
 

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 function Estadisticas() {
-    const [articuloMenosVendido, setArticuloMenosVendido] = useState(null);
+    const [totalAqlquileresMes, setTotalAlquileresMes] = useState(null);
     const [totalTransacciones, setTotalTransacciones] = useState(null);
+    const []
 
     useEffect(() => {
         const fecha = '2023-11-28'; // Formato de fecha YYYY-MM-DD
@@ -10,8 +11,8 @@ function Estadisticas() {
         fetch(`http://localhost:5000/api/estadisticas/total_alquileres_mes?fecha=${fecha}`)
             .then(response => response.json())
             .then(data => {
-                console.log('Artículo menos vendido:', data);
-                setArticuloMenosVendido(data);
+                console.log('Total Alquileres al mes:', data);
+                setTotalAlquileresMes(data);
             })
             .catch(error => console.log('Error fetching artículo menos vendido:', error));
 
@@ -29,7 +30,7 @@ function Estadisticas() {
             <h1>Estadísticas</h1>
             {articuloMenosVendido && totalTransacciones ? (
                 <div>
-                    <h2>Total de alquileres al mes: {articuloMenosVendido}</h2>
+                    <h2>Total de alquileres al mes: {totalAqlquileresMes}</h2>
                     <h2>Total de transacciones del mes: {totalTransacciones}</h2>
                 </div>
             ) : (
