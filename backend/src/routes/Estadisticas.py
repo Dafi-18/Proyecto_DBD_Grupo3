@@ -65,3 +65,129 @@ def total_recaudado_ventas_mes():
         return jsonify({'total_recaudado_venta_mes': total}), 200
     except Exception as ex:
         return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_mas_alquilado_mes', methods=['GET'])
+def articulo_mas_alquilado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_articulo_mas_alquilado_mes(fecha)
+        return jsonify({'articulo_mas_alquilado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_cantidad_mas_aquilado_mes', methods=['GET'])
+def articulo_cantidad_mas_aquilado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_cantidad_articulo_mas_alquilado_mes(
+            fecha)
+        return jsonify({'articulo_cantidad_mas_aquilado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_menos_alquilado_mes', methods=['GET'])
+def articulo_menos_alquilado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_articulo_menos_alquilado_mes(fecha)
+        return jsonify({'articulo_menos_alquilado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_cantidad_menos_aquilado_mes', methods=['GET'])
+def articulo_cantidad_menos_aquilado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_cantidad_articulo_menos_alquilado_mes(
+            fecha)
+        return jsonify({'articulo_cantidad_menos_aquilado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_mas_prestado_mes', methods=['GET'])
+def articulo_mas_prestado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_articulo_mas_prestado_mes(fecha)
+        return jsonify({'articulo_mas_prestado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_cantidad_mas_prestado_mes', methods=['GET'])
+def articulo_cantidad_mas_prestado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_cantidad_articulo_mas_prestado_mes(
+            fecha)
+        return jsonify({'articulo_cantidad_mas_prestado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_menos_prestado_mes', methods=['GET'])
+def articulo_menos_prestado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_articulo_menos_prestado_mes(fecha)
+        return jsonify({'articulo_menos_prestado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_cantidad_menos_prestado_mes', methods=['GET'])
+def articulo_cantidad_menos_prestado_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_cantidad_articulo_menos_prestado_mes(
+            fecha)
+        return jsonify({'articulo_cantidad_menos_prestado_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_mas_vendido_mes', methods=['GET'])
+def articulo_mas_vendido_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_articulo_mas_vendido_mes(fecha)
+        return jsonify({'articulo_mas_vendido_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_cantidad_mas_vendido_mes', methods=['GET'])
+def articulo_cantidad_mas_vendido_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_cantidad_articulo_mas_vendido_mes(
+            fecha)
+        return jsonify({'articulo_cantidad_mas_vendido_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_menos_vendido_mes', methods=['GET'])
+def articulo_menos_vendido_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_articulo_menos_vendido_mes(fecha)
+        return jsonify({'articulo_menos_vendido_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
+
+
+@main.route('/articulo_cantidad_menos_vendido_mes', methods=['GET'])
+def articulo_cantidad_menos_vendido_mes():
+    try:
+        fecha = request.args.get('fecha')
+        articulo = EstadisticasModel.get_cantidad_articulo_menos_vendido_mes(
+            fecha)
+        return jsonify({'articulo_cantidad_menos_vendido_mes': articulo}), 200
+    except Exception as ex:
+        return jsonify({'error': str(ex)}), 500
