@@ -56,20 +56,6 @@ class InventarioVentasModel():
         except Exception as ex:
             raise ex
         
-    @classmethod
-    def update_articulo(self, cantidad, precio_unitario, id_articulo):
-        try:
-            connection = get_connection()
-
-            with connection.cursor() as cursor:
-                cursor.execute('UPDATE Articulo SET cantidad = %d , precio_unitario = %f WHERE Id_articulo = %s;',(cantidad, precio_unitario, id_articulo))
-                affected_rows = cursor.rowcount
-                connection.commit()
-            connection.close()
-            return affected_rows
-
-        except Exception as ex:
-            raise ex
         
     @classmethod
     def add_articulo(self, articulo):
@@ -86,6 +72,21 @@ class InventarioVentasModel():
 
         except Exception as ex:
             raise Exception(ex)
+    
+    @classmethod
+    def update_articulo(self, cantidad, precio_unitario, id_articulo):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute('UPDATE Articulo SET cantidad = %d , precio_unitario = %f WHERE Id_articulo = %s;',(cantidad, precio_unitario, id_articulo))
+                affected_rows = cursor.rowcount
+                connection.commit()
+            connection.close()
+            return affected_rows
+
+        except Exception as ex:
+            raise ex
     
     @classmethod
     def delete_articulo(self, articulo):
