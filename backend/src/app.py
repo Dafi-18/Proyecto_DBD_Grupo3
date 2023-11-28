@@ -4,9 +4,10 @@ from config import config
 
 # Routes
 from routes import Product
-from routes import Estadisticas
+from routes import Estadisticas, Finanzas
 from routes import security
 from routes import Encuesta
+
 
 app = Flask(__name__)
 
@@ -26,8 +27,11 @@ if __name__ == '__main__':
 
     # Blueprints Security
     app.register_blueprint(security.main, url_prefix='/api/security')
-       # Blueprints Encuesta
+    # Blueprints Encuesta
     app.register_blueprint(Encuesta.main, url_prefix='/api/encuesta')
+
+    # BluePrints Finanzas
+    app.register_blueprint(Finanzas.main, url_prefix='/api/finanzas')
 
     # Error handlers
     app.register_error_handler(404, page_not_found)
