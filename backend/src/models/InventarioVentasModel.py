@@ -6,27 +6,26 @@ from .entities.product import Product
 class InventarioVentasModel():
 
     @classmethod
-    def get_articulos_vendidos(fecha):
+    def get_articulos_vendidos(self):
         query="""
-        SELECT art.nombre_articulo, sum(dv.cantidad) 
-        FROM detalle_venta dv 
-        inner join venta v 
-        ON dv.id_venta = v.id_venta and v.fecha_venta = (%s AS DATE)
-        inner join articulo art 
-        on dv.id_articulo = art.id_articulo 
+        SELECT art.nombre_articulo, sum(dv.cantidad) FROM detalle_venta dv 
+        inner join venta v ON dv.id_venta = v.id_venta
+        inner join articulo art on dv.id_articulo = art.id_articulo 
         group by art.id_articulo;
         """
         try:
             connection = get_connection()
             articulos_vendidos = []
+            
             with connection.cursor() as cursor:
-                cursor.execute(query, fecha)
+                
+                cursor.execute(query)
                 resultset = cursor.fetchall()
                 
                 for row in resultset:
                     articulos_vendidos.append(
-                        #Articulos_vendidos(row[0], row[1]).to_JSON())
-                        Product((row[0], row[1]).to_JSON()))
+                        Articulos_vendidos(row[0], row[1]).to_JSON())
+                        #Product((row[0], row[1]).to_JSON()))
                     
             connection.close()
             return articulos_vendidos
@@ -36,19 +35,20 @@ class InventarioVentasModel():
         
     @classmethod
     def get_inventario_ventas(self):
+        query="""
+        SELECT id_articulo, nombre_articulo, precio_unitario, cantidad FROM articulo WHERE tipo_articulo = 'venta';
+        """
         try:
             connection = get_connection()
             inventario_ventas = []
-
+            
             with connection.cursor() as cursor:
-                cursor.execute(
-                    'SELECT id_articulo, nombre_articulo, precio_unitario, cantidad FROM articulo WHERE tipo_articulo="venta";')
+                cursor.execute(query)
                 resultset = cursor.fetchall()
 
                 for row in resultset:
                     inventario_ventas.append(
-                        #Inventario_Ventas(row[0], row[1], row[2], row[3]).to_JSON())
-                        Product(row[0], row[1], row[2], row[3]).to_JSON())
+                        Inventario_Ventas(row[0], row[1], row[2], row[3]).to_JSON())
 
             connection.close()
             return inventario_ventas

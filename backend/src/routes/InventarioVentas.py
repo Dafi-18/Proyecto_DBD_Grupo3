@@ -9,19 +9,17 @@ main = Blueprint('inventario_ventas_blueprint', __name__)
 @main.route('/articulos_vendidos', methods=['GET'])
 def get_articulos_vendidos():
     try:
-        fecha = request.json['fecha']
-        articulos_vendidos = InventarioVentasModel.get_articulos_vendidos(fecha)
+        articulos_vendidos = InventarioVentasModel.get_articulos_vendidos()
         return jsonify(articulos_vendidos), 200
 
     except Exception as ex:
         return jsonify({'error': str(ex)}), 500
 
 
-@main.route('/get_inventario_ventas', methods=['GET'])
+@main.route('/', methods=['GET'])
 def get_inventario_ventas():
     try:
-        fecha = request.json['fecha']
-        inventario_ventas = InventarioVentasModel.get_inventario_ventas(fecha)
+        inventario_ventas = InventarioVentasModel.get_inventario_ventas()
         return jsonify(inventario_ventas), 200
 
     except Exception as ex:
