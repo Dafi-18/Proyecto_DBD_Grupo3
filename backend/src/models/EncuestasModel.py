@@ -23,3 +23,39 @@ class EncuestasModel():
 
         except Exception as ex:
             raise ex
+        
+    @classmethod
+    def get_Encuesta_ID(self, id):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    'SELECT Id_encuesta, Id_administrador, Fecha_apertura, Fecha_cierre, Cantidad_preguntas, Cantidad_respuestas, Estado_encuesta FROM Encuesta WHERE Id_encuesta=%s',(id,))
+                row = cursor.fetchone()
+                encuesta=None
+                if row !=None:
+                    encuesta=Encuesta(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+                    encuesta=encuesta.to_JSON()
+            connection.close()
+            return encuesta
+        except Exception as ex:
+            raise Exception(ex)
+
+    @classmethod
+    def get_Encuesta_fecha(self, fe):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    'SELECT Id_encuesta, Id_administrador, Fecha_apertura, Fecha_cierre, Cantidad_preguntas, Cantidad_respuestas, Estado_encuesta FROM Encuesta E WHERE E.Fecha_apertura=%s',(fe,))
+                row = cursor.fetchone()
+                encuesta=None
+                if row !=None:
+                    encuesta=Encuesta(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+                    encuesta=encuesta.to_JSON()
+            connection.close()
+            return encuesta
+        except Exception as ex:
+            raise Exception(ex)
