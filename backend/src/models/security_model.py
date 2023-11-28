@@ -158,3 +158,35 @@ class SeguridadModel():
         
         except Exception as ex:
             raise Exception(ex)
+        
+    @classmethod
+    def get_cantidad_servicios(self,id):
+        try:
+            connection=get_connection()
+            services=[]
+
+            with connection.cursor() as cursor:
+                cursor.execute("""SELECT 
+                    (
+                    -- Subconsulta para contar registros de préstamos
+                      COALESCE((SELECT COUNT(*) FROM Prestamo P WHERE P.Id_usuario = U.Id_usuario), 0) +
+                     -- Subconsulta para contar registros de ventas
+                      COALESCE((SELECT COUNT(*) FROM Venta V WHERE V.Id_usuario = U.Id_usuario), 0) +
+                     -- Subconsulta para contar registros de alquileres
+                      COALESCE((SELECT COUNT(*) FROM Alquiler A WHERE A.Id_usuario = U.Id_usuario), 0)
+                    ) AS Total_registros
+                    FROM
+                        Usuario U 
+                    WHERE 
+                        Id_usuario  = %s ;""" , (id))
+                
+                row=cursor.fetchone()
+                
+            
+            connection.close()
+         
+            return  row
+                
+        
+        except Exception as ex:
+            raise Exception(ex)

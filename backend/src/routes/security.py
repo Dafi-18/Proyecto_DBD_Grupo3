@@ -81,8 +81,9 @@ def login():
 
     except Exception as ex:
         return jsonify({'message': str(ex)}), 500
-    @main.route('/update/<id>',methods=['PUT'])  
-    def update_contrasena(id):
+    
+@main.route('/update/<id>',methods=['PUT'])  
+def update_contrasena(id):
         try:
             id_usuario=request.json['id']
             Contrasena= request.json['contrasena']
@@ -104,8 +105,8 @@ def login():
         except Exception as ex:
             return jsonify({'message' : str(ex)}),500
 
-    @main.route('/reporte')
-    def get_servicios_user():
+@main.route('/reporte')
+def get_servicios_user():
         try:
             id_user =request.json['id']
             user = usuario(id_user, None, None, None, None)
@@ -115,3 +116,15 @@ def login():
 
         except Exception as ex:
             return jsonify({'message': str(ex)}), 500
+
+
+@main.route('/cantidad/<id>')  
+def get_cantidad_servicios(id):
+        try:
+            cantidad=SeguridadModel.get_cantidad_servicios(id)
+            if cantidad !=  None: 
+                return jsonify(cantidad)
+            else:
+                return jsonify({}),400
+        except Exception as ex:
+            return jsonify({'message' : str(ex)}),500
