@@ -34,6 +34,15 @@ if __name__ == '__main__':
 
     # BluePrints Finanzas
     app.register_blueprint(Finanzas.main, url_prefix='/api/finanzas')
+    
+    # BluePrints Inventario ventas
+    app.register_blueprint(Finanzas.main, url_prefix='/api/inventario/ventas')
+    
+    # BluePrints Inventario préstamos
+    app.register_blueprint(Finanzas.main, url_prefix='/api/inventario/prestamos')
+    
+    # BluePrints Reservas
+    app.register_blueprint(Finanzas.main, url_prefix='/api/reservas')
 
     # Error handlers
     app.register_error_handler(404, page_not_found)
