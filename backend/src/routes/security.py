@@ -73,7 +73,7 @@ def login():
         session = SeguridadModel.login(user)
 
         if session:
-            return jsonify(correo_uni)
+            return jsonify({'Message': 'Inicio session', 'session': session})
         else:
             return jsonify({'Message': 'No inicio session'})
 

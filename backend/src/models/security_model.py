@@ -1,5 +1,6 @@
 from database.dastabase import get_connection
 from .entities.seguridad import usuario, persona
+import json
 
 
 class SeguridadModel():
@@ -70,6 +71,7 @@ class SeguridadModel():
 
     @classmethod
     def login(self, usuario):
+        connection = None
         try:
             connection = get_connection()
 
@@ -79,15 +81,40 @@ class SeguridadModel():
                 row = cursor.fetchone()
 
                 if row:
-                    if usuario.check_password(row[4], usuario.contrasena):
-                        user = usuario(row[0], row[1], row[2], row[3], row[4])
-                        connection.close()
-                        return user.to_JSON()
-                    else:
-                        return None
+                    # Print the row from the database
+                    print(f"Row from database: {row}")
 
+                    # Print the password stored in the database
+                    print(f"Stored password: {row[4]}")
+                    # Print the password provided by the user
+                    print(f"Provided password: {usuario.contrasena}")
+
+                    if row[4] == usuario.contrasena:  # Compare the passwords directly
+                        # Print a message if the passwords match
+                        print(f"Password match for user {usuario.correouni}")
+                        user = {
+                            "id_usuario": row[0],
+                            "dni": row[1],
+                            "cod_uni": row[2],
+                            "correo_uni": row[3],
+                            "contrasena": row[4]
+                        }
+                        # Convert the user dictionary to JSON
+                        return json.dumps(user)
+                    else:
+                        # Print a message if the passwords do not match
+                        print(
+                            f"Password mismatch for user {usuario.correouni}")
+                        return None
                 else:
+                    # Print a message if no user was found
+                    print(f"No user found with email {usuario.correouni}")
                     return None
 
         except Exception as ex:
+            print(f"Error: {ex}")  # Print any error that occurs
             raise Exception(ex)
+
+        finally:
+            if connection:
+                connection.close()  # Ensure the database connection is closed
