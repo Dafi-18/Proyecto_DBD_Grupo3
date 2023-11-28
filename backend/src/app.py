@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from config import config
 
@@ -10,6 +11,7 @@ from routes import Encuesta
 
 
 app = Flask(__name__)
+CORS(app)
 
 
 def page_not_found(error):
