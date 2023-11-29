@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+
 from models.ReservasModel import ReservasModel
 from models.entities.reservas import Calendario
 
@@ -18,13 +19,13 @@ def get_calendario():
 def generate_calendario():
     try:
         fecha = request.json['fecha']
-        affected_rows = InventarioPrestamosModel.add_articulo(fecha)
+        affected_rows = ReservasModel.generate_calendario(fecha)
         print(affected_rows)
 
-        if affected_rows == 1:
-            return jsonify({'message': "Se ha generado los horarios de la semana"})
-        else:
+        if affected_rows == 0:
             return jsonify({'message': "Error en la generación de los horarios de la semana"}), 500
+        else:
+            return jsonify({'message': "Se ha generado los horarios de la semana"})
 
         return jsonify({})
 
@@ -35,13 +36,10 @@ def generate_calendario():
 @main.route('/update/<fecha>/<id_hora>', methods=['PUT'])
 def update_disponibilidad(fecha, id_hora):
     try:
-        fecha = request.json['fecha']
-        calendario = Calendario(id_hora, fecha, "", "", "")
-        
-        affected_rows = ReservasModel.update_disponibilidad(calendario)
+        affected_rows = ReservasModel.update_disponibilidad(fecha, id_hora)
         
         if affected_rows == 1:
-            return jsonify({'message': f"Se ha cambiado la disponibilidad del calendario del dia {calendario.fecha} con el id_hora {calendario.id_hora}"})
+            return jsonify({'message': f"Se ha cambiado la disponibilidad del calendario del dia {fecha} con el id_hora {id_hora}"})
         else:
             return jsonify({'message': "No se pudo cambiar la disponibilidad"}), 404
 
