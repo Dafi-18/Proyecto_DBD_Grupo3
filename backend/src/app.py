@@ -10,6 +10,7 @@ from routes import security
 from routes import Encuesta
 from routes import InventarioPrestamos, InventarioVentas
 from routes import Reservas
+from routes import Noticia
 
 app = Flask(__name__)
 CORS(app)
@@ -46,6 +47,9 @@ if __name__ == '__main__':
 
     # BluePrints Reservas
     app.register_blueprint(Reservas.main, url_prefix='/api/reservas')
+
+    # BluePrints Noticias
+    app.register_blueprint(Noticia.main, url_prefix='/api/noticia')
 
     # Error handlers
     app.register_error_handler(404, page_not_found)
