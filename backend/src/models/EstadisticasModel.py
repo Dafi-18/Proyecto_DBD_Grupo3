@@ -57,7 +57,6 @@ class EstadisticasModel:
             with conn.cursor() as cur:
                 cur.execute(query, (fecha, fecha))
                 result = cur.fetchone()
-        print("Resultado:", result)  # Imprime el resultado
         return result[0] if result else None
 
     @classmethod
