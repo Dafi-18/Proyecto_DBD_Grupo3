@@ -77,6 +77,39 @@ class EncuestasModel():
             return row[0]
         except Exception as ex:
             raise Exception(ex)
+        
+    @classmethod
+    def add_encuesta(self, enc):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute("""INSERT INTO Encuesta (Id_encuesta, Id_administrador, Fecha_apertura, Fecha_cierre, Cantidad_preguntas, Cantidad_respuestas, Estado_encuesta ) 
+                                VALUES (%s, %s, %s, %s, %s, %s, %s)""", (enc.Id_encuesta, enc.Id_administrador, enc.Fecha_apertura, enc.Fecha_cierre, enc.Cantidad_preguntas, enc.Cantidad_respuestas, enc.Estado_encuesta ))
+                affected_rows = cursor.rowcount
+                connection.commit()
+
+            connection.close()
+            return affected_rows
+        except Exception as ex:
+            raise Exception(ex)
+        
+    @classmethod    
+    def update_encuesta(self, enc):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute("""UPDATE Encuesta SET Id_administrador= %s, Fecha_apertura = %s, Fecha_cierre = %s, Cantidad_preguntas = %s, Cantidad_respuestas = %s, Estado_encuesta = %s 
+                               WHERE Id_encuesta = %s""", (enc.Id_administrador, enc.Fecha_apertura, enc.Fecha_cierre, enc.Cantidad_preguntas, enc.Cantidad_respuestas, enc.Estado_encuesta,enc.Id_encuesta ))
+                affected_rows = cursor.rowcount
+                connection.commit()
+            connection.close()
+            return affected_rows
+        except Exception as ex:
+            raise Exception(ex)
+        
+
 ##################################################################################################### PREGUNTAS##############################################
     @classmethod
     def get_Pregunta(self):
@@ -98,3 +131,34 @@ class EncuestasModel():
 
         except Exception as ex:
             raise ex
+    @classmethod
+    def add_pregunta(self, pre):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute("""INSERT INTO Pregunta (Id_pregunta, Id_encuesta, Id_administrador, tipo_respuesta) 
+                                VALUES (%s, %s, %s, %s)""", (pre.Id_pregunta, pre.Id_encuesta, pre.Id_administrador, pre.tipo_respuesta ))
+                affected_rows = cursor.rowcount
+                connection.commit()
+
+            connection.close()
+            return affected_rows
+        except Exception as ex:
+            raise Exception(ex)
+    @classmethod    
+    def update_pregunta(self, pre):
+        try:
+            connection = get_connection()
+
+            with connection.cursor() as cursor:
+                cursor.execute("""UPDATE Pregunta SET  Id_administrador = %s, tipo_respuesta = %s
+                               WHERE Id_encuesta = %s AND Id_pregunta= %s""", (pre.Id_administrador, pre.tipo_respuesta, pre.Id_encuesta, pre.Id_pregunta))
+                affected_rows = cursor.rowcount
+                connection.commit()
+            connection.close()
+            return affected_rows
+        except Exception as ex:
+            raise Exception(ex)
+        
+        
