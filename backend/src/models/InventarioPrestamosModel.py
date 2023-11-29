@@ -2,11 +2,10 @@ from database.dastabase import get_connection
 from .entities.inventario_prestamos import Inventario_Prestamos, Articulos_prestados
 from .entities.product import Product
 
-
 class InventarioPrestamosModel():
 
     @classmethod
-    def get_articulos_prestados(fecha):
+    def get_articulos_prestados(cls, fecha):
         query="""
         SELECT art.nombre_articulo, count(p.id_articulo)  FROM articulo art 
 		inner join prestamo p ON art.id_articulo = p.id_articulo 
@@ -20,7 +19,7 @@ class InventarioPrestamosModel():
     
             with connection.cursor() as cursor:
                 
-                cursor.execute(query, fecha)
+                cursor.execute(query, (fecha,))
                 resultset = cursor.fetchall()
                 
                 for row in resultset:

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 
-from models.InventarioPrestamosModel import Inventario_Prestamos, Articulos_prestados
+from models.InventarioPrestamosModel import InventarioPrestamosModel
 from models.ProductoModel import ProductoModel
 from models.entities.product import Product
 
@@ -36,7 +36,7 @@ def add_articulo():
         cantidad = request.json['cantidad']
         descripcion = request.json['descripcion']
         
-        articulo = Product(id_articulo, nombre_articulo, "prestamo", cantidad, descripcion, null, "disponible")
+        articulo = Product(id_articulo, nombre_articulo, "prestamo", cantidad, descripcion, None, "disponible")
 
         affected_rows = InventarioPrestamosModel.add_articulo(articulo)
         print(affected_rows)
