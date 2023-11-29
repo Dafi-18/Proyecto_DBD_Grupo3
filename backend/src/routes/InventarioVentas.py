@@ -53,17 +53,17 @@ def add_articulo():
         return jsonify({'message': str(ex)}), 500
 
 
-@main.route('/update/<id>', methods=['PUT'])
-def update_articulo(cantidad, precio_unitario, id_articulo):
+@main.route('/update/<id_articulo>', methods=['PUT'])
+def update_articulo(id_articulo):
     try:
         cantidad = request.json['cantidad']
         precio_unitario = request.json['precio_unitario']
-        id_articulo = Product(id_articulo)
+        articulo = Product(id_articulo,"","",cantidad,"",precio_unitario,"")
         
-        affected_rows = InventarioVentasModel.update_articulo(cantidad, precio_unitario, id_articulo)
+        affected_rows = InventarioVentasModel.update_articulo(articulo)
         
         if affected_rows == 1:
-            return jsonify(id_articulo)
+            return jsonify({'message': f"Se ha actualizado el artículo con el id {articulo.id_articulo}"})
         else:
             return jsonify({'message': "No item updated"}), 404
 

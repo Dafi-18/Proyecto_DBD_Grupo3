@@ -74,12 +74,12 @@ class InventarioVentasModel():
             raise Exception(ex)
     
     @classmethod
-    def update_articulo(self, cantidad, precio_unitario, id_articulo):
+    def update_articulo(self, articulo):
         try:
             connection = get_connection()
 
             with connection.cursor() as cursor:
-                cursor.execute('UPDATE Articulo SET cantidad = %d , precio_unitario = %f WHERE Id_articulo = %s;',(cantidad, precio_unitario, id_articulo))
+                cursor.execute('UPDATE Articulo SET cantidad = %s , precio_unitario = %s WHERE Id_articulo = %s;',(articulo.cantidad, articulo.precio_unitario, articulo.id_articulo,))
                 affected_rows = cursor.rowcount
                 connection.commit()
             connection.close()
