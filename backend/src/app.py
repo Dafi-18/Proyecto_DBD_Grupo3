@@ -38,12 +38,10 @@ if __name__ == '__main__':
     app.register_blueprint(Finanzas.main, url_prefix='/api/finanzas')
 
     # BluePrints Inventario ventas
-    app.register_blueprint(InventarioVentas.main,
-                           url_prefix='/api/inventario/ventas')
+    app.register_blueprint(InventarioVentas.main, url_prefix='/api/inventario/ventas')
 
     # BluePrints Inventario préstamos
-    app.register_blueprint(InventarioPrestamos.main,
-                           url_prefix='/api/inventario/prestamos')
+    app.register_blueprint(InventarioPrestamos.main, url_prefix='/api/inventario/prestamos')
 
     # BluePrints Reservas
     app.register_blueprint(Reservas.main, url_prefix='/api/reservas')

@@ -6,27 +6,27 @@ from .entities.product import Product
 class InventarioVentasModel():
 
     @classmethod
-    def get_articulos_vendidos(self):
+    def get_articulos_vendidos(cls,fecha):
         query="""
         SELECT art.nombre_articulo, sum(dv.cantidad) FROM detalle_venta dv 
-        inner join venta v ON dv.id_venta = v.id_venta
+        inner join venta v ON dv.id_venta = v.id_venta and EXTRACT(MONTH FROM v.Fecha_venta) = EXTRACT(MONTH FROM CAST(%s AS DATE)) 
+        AND EXTRACT(YEAR FROM v.Fecha_venta) = EXTRACT(YEAR FROM CAST(%s AS DATE))
         inner join articulo art on dv.id_articulo = art.id_articulo 
         group by art.id_articulo;
         """
         try:
             connection = get_connection()
             articulos_vendidos = []
-            
+    
             with connection.cursor() as cursor:
                 
-                cursor.execute(query)
+                cursor.execute(query, (fecha, fecha))
                 resultset = cursor.fetchall()
                 
                 for row in resultset:
                     articulos_vendidos.append(
                         Articulos_vendidos(row[0], row[1]).to_JSON())
-                        #Product((row[0], row[1]).to_JSON()))
-                    
+                        
             connection.close()
             return articulos_vendidos
 
@@ -63,8 +63,8 @@ class InventarioVentasModel():
             connection = get_connection()
 
             with connection.cursor() as cursor:
-                cursor.execute("INSERT INTO Articulo (Id_articulo, Nombre_articulo, Tipo_articulo, Cantidad, Descripcion, Precio_unitario, Disponibilidad) VALUES (%s, %s, %s, %d, %s, %f, %s);", (
-                    Product.id_articulo, Product.nombre_articulo, Product.tipo_articulo, Product.cantidad, Product.descripcion, Product.precio_unitario, Product.disponibilidad))
+                cursor.execute("INSERT INTO Articulo (id_articulo, nombre_articulo, tipo_articulo, cantidad, descripcion, precio_unitario, disponibilidad) VALUES (%s, %s, %s, %s, %s, %s, %s);", (
+                    articulo.id_articulo, articulo.nombre_articulo, articulo.tipo_articulo, articulo.cantidad, articulo.descripcion, articulo.precio_unitario, articulo.disponibilidad))
                 affected_rows = cursor.rowcount
                 connection.commit()
             connection.close()
@@ -94,7 +94,7 @@ class InventarioVentasModel():
             connection = get_connection()
 
             with connection.cursor() as cursor:
-                cursor.execute('DELETE FROM articulo WHERE id_articulo = %s;', (articulo.id_articulo)) 
+                cursor.execute('DELETE FROM articulo WHERE id_articulo = %s;', (articulo.id_articulo,)) 
                 affected_rows = cursor.rowcount
                 connection.commit()
             connection.close()

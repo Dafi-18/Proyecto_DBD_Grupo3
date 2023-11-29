@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 
 from models.InventarioVentasModel import InventarioVentasModel
 from models.ProductoModel import ProductoModel
+from models.entities.product import Product
 
 main = Blueprint('inventario_ventas_blueprint', __name__)
 
@@ -9,7 +10,8 @@ main = Blueprint('inventario_ventas_blueprint', __name__)
 @main.route('/articulos_vendidos', methods=['GET'])
 def get_articulos_vendidos():
     try:
-        articulos_vendidos = InventarioVentasModel.get_articulos_vendidos()
+        fecha = request.json['fecha']
+        articulos_vendidos = InventarioVentasModel.get_articulos_vendidos(fecha)
         return jsonify(articulos_vendidos), 200
 
     except Exception as ex:
@@ -41,7 +43,7 @@ def add_articulo():
         print(affected_rows)
 
         if affected_rows == 1:
-            return jsonify(articulo.id_articulo)
+            return jsonify(articulo.to_JSON())
         else:
             return jsonify({'message': "Error en insert"}), 500
 
@@ -72,12 +74,11 @@ def update_articulo(cantidad, precio_unitario, id_articulo):
 @main.route('/delete/<id_articulo>', methods=['DELETE'])
 def delete_articulo(id_articulo):
     try:
-        articulo = Product(id_articulo)
-        
+        articulo = Product(id_articulo,"","","","","","")
         affected_rows = InventarioVentasModel.delete_articulo(articulo)
         
         if affected_rows == 1:
-            return jsonify(articulo.id_articulo)
+            return jsonify({'message': f"Se eliminó el artículo con el id {id_articulo}"})
         else:
             return jsonify({'message': "No item deleted"}), 404
 
