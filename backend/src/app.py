@@ -11,6 +11,7 @@ from routes import Encuesta
 from routes import InventarioPrestamos, InventarioVentas
 from routes import Reservas
 from routes import Noticia
+from routes import Transacciones
 
 app = Flask(__name__)
 CORS(app)
@@ -36,6 +37,15 @@ if __name__ == '__main__':
 
     # BluePrints Finanzas
     app.register_blueprint(Finanzas.main, url_prefix='/api/finanzas')
+    
+    #BluePrints Ventas
+    app.register_blueprint(Finanzas.main, url_prefix='/api/ventas')
+    
+    #BluePrints Prestamos
+    app.register_blueprint(Finanzas.main, url_prefix='/api/prestamos')
+    
+    #BluePrints Alquileres
+    app.register_blueprint(Finanzas.main, url_prefix='/api/alquileres')
 
     # BluePrints Inventario ventas
     app.register_blueprint(InventarioVentas.main, url_prefix='/api/inventario/ventas')
